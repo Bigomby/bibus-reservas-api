@@ -1,0 +1,22 @@
+{
+  "name": "reserva_salas_bot",
+  "version": "0.1.0",
+  "description": "Bot para reservar salas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-import": "^2.2.0"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "jsdom": "^9.8.3",
+    "winston": "^2.3.0"
+  }
+}
