@@ -3,7 +3,7 @@
 API RESTful para acceder a la aplicación de reserva de salas de la Biblioteca
 de la Escuela Técnica Superior de Ingenieros de la Universidad de Sevilla.
 
-# Uso
+## Uso
 
 ```bash
 git clone https://github.com/Bigomby/bibing-salas-api.git
@@ -18,7 +18,7 @@ mediante la variable de entorno `PORT`, por ejemplo:
 PORT=80 npm run
 ```
 
-# Métodos
+## Métodos
 
 La API expone los siguientes métodos:
 

@@ -1,0 +1,10 @@
+{
+    "extends": "airbnb-base",
+    "installedESLint": true,
+    "rules": {
+      "no-restricted-syntax": ["off", "ForOfStatement"]
+    },
+    "plugins": [
+        "import"
+    ]
+}
