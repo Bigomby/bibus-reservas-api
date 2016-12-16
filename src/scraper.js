@@ -39,7 +39,9 @@ function createSalas() {
 }
 
 class Scraper {
-  constructor(url = 'http://bibing.us.es/estado_salas/BIA') {
+  constructor(url) {
+    if (!url) throw new Error('No SCRAPER_URL provided');
+
     this.url = url;
   }
 

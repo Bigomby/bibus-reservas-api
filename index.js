@@ -1,21 +1,22 @@
 const express = require('express');
 const winston = require('winston');
 
-const Router = require('./src/api');
-
-const PORT = 8080 || process.env.PORT;
-const DEBUG = false || process.env.DEBUG;
+const config = require('./config/config');
+const API = require('./src/api');
+const Scraper = require('./src/scraper');
 
 const logger = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({
-      level: DEBUG ? 'debug' : 'info',
+      level: config.logger.level,
       colorize: true,
       prettyPrint: true,
     }),
   ],
 });
 const app = express();
-const api = new Router(app, logger);
+const scraper = new Scraper(config.scraper.url);
+const api = new API(app, scraper, logger);
 
-api.listen(PORT, () => logger.info(`API listening on ${PORT}`));
+api.listen(config.server.port,
+  () => logger.info(`API listening on ${config.server.port}`));

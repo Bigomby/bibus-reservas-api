@@ -1,13 +1,11 @@
-const Scraper = require('./scraper');
-
 /**
  * API handles HTTP requests
  * @arg {express app}     Express application
  * @type {winston logger} Winston logger
  */
 module.exports = class API {
-  constructor(app, logger) {
-    this.scraper = new Scraper();
+  constructor(app, scraper, logger) {
+    this.scraper = scraper;
     this.app = app;
     this.logger = logger;
 
