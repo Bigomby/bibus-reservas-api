@@ -2,8 +2,8 @@ const express = require('express');
 const winston = require('winston');
 
 const config = require('./config/config');
-const API = require('./src/api');
-const Scraper = require('./src/scraper');
+const API = require('./src/api/api');
+const Scraper = require('./src/scraper/scraper');
 
 const logger = new (winston.Logger)({
   transports: [
