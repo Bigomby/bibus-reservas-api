@@ -15,9 +15,12 @@
     "eslint-plugin-import": "^2.2.0"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie": "^0.3.1",
     "express": "^4.14.0",
     "joi": "^10.0.6",
     "jsdom": "^9.8.3",
+    "request": "^2.79.0",
     "winston": "^2.3.0"
   }
 }

@@ -1,3 +1,5 @@
+const bodyParser = require('body-parser');
+
 /**
  * API handles HTTP requests
  * @arg {express app}     Express application
@@ -9,10 +11,13 @@ module.exports = class API {
     this.app = app;
     this.logger = logger;
 
+    this.app.use(bodyParser.json({ type: 'application/json' }));
+
     this.app.get('/salas', (req, res) => {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       logger.debug('GET /salas', ip);
-      this.scraper.get((err, salas) => {
+
+      this.scraper.getStatus((err, salas) => {
         if (err) return res.send(500, err);
         return res.send(salas);
       });
@@ -21,7 +26,8 @@ module.exports = class API {
     this.app.get('/salas/:id', (req, res) => {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       logger.debug(`GET /salas/${req.params.id}`, ip);
-      this.scraper.get((err, salas) => {
+
+      this.scraper.getStatus((err, salas) => {
         if (err) return res.send(500, err);
 
         for (const sala of salas) {
@@ -35,7 +41,8 @@ module.exports = class API {
     this.app.get('/turnos/:id', (req, res) => {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
       logger.debug(`GET /turnos/${req.params.id}`, ip);
-      this.scraper.get((err, salas) => {
+
+      this.scraper.getStatus((err, salas) => {
         if (err) return res.send(500, err);
         const turnos = [];
 
@@ -48,6 +55,37 @@ module.exports = class API {
 
         return res.send(turnos);
       });
+    });
+
+    this.app.post('/reserva', (req, res) => {
+      const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+      logger.debug('POST /reserva}', ip);
+
+      const fields = ['correo', 'sala', 'turno', 'fecha', 'nombre', 'uvus',
+        'usuario', 'password'];
+      for (const field of fields) {
+        if (!req.body[field]) {
+          return res.send({
+            error: `Missing field: ${field}` });
+        }
+      }
+
+      const options = {
+        nombre: req.body.nombre,
+        sala: req.body.sala,
+        uvus: req.body.uvus,
+        turno: req.body.turno,
+        correo: req.body.correo,
+        fecha: req.body.fecha,
+      };
+
+      scraper.login(req.body.usuario, req.body.password)
+        .then(location => scraper.getTicketID(location))
+        .then(ticketID => scraper.takeSala(ticketID, options))
+        .then(response => res.send(response))
+        .catch(err => res.send(err));
+
+      return null;
     });
   }
 

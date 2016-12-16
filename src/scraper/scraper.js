@@ -1,4 +1,8 @@
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["getTicketID"] }] */
+
 const jsdom = require('jsdom');
+const request = require('request');
+const cookie = require('cookie');
 
 function createSalas() {
   return [
@@ -39,15 +43,19 @@ function createSalas() {
 }
 
 class Scraper {
-  constructor(url) {
-    if (!url) throw new Error('No SCRAPER_URL provided');
+  constructor(options) {
+    if (!options) throw new Error('No options provided');
 
-    this.url = url;
+    this.estadoURL = options.estadoURL;
+    this.loginURL = options.loginURL;
+    this.reservaURL = options.reservaURL;
   }
 
-  get(cb) {
+  getStatus(cb) {
     jsdom.env(
-      this.url, ['http://code.jquery.com/jquery.js'], (err, window) => {
+      this.estadoURL,
+      ['http://code.jquery.com/jquery.js'],
+      (err, window) => {
         if (err) throw new Error(err);
 
         const salas = createSalas();
@@ -64,6 +72,62 @@ class Scraper {
 
         if (typeof cb === 'function') cb(null, salas);
       });
+  }
+
+  login(username, password) {
+    return new Promise((resolve, reject) => {
+      request.post({
+        url: this.loginURL,
+        form: {
+          adAS_i18n_theme: 'es',
+          adAS_mode: 'authn',
+          adAS_username: username,
+          adAS_password: password,
+        },
+      }, (loginError, loginResponse) => {
+        if (loginError) reject(loginError);
+
+        resolve(loginResponse.headers.location);
+      });
+    });
+  }
+
+  getTicketID(location) {
+    return new Promise((resolve, reject) => {
+      request.post({
+        url: location,
+      }, (err, response) => {
+        if (err) reject(err);
+
+        resolve(cookie.parse(response.headers['set-cookie'].pop()).PHPSESSID);
+      });
+    });
+  }
+
+  takeSala(ticketID, options) {
+    return new Promise((resolve, reject) => {
+      const sessionID = `PHPSESSID=${ticketID}`;
+      const jar = request.jar();
+      jar.setCookie(sessionID, this.reservaURL);
+
+      request.post({
+        url: this.reservaURL,
+        jar,
+        form: {
+          nombre: options.nombre,
+          uvus: options.uvus,
+          correo: options.correo,
+          sala: options.sala,
+          turno: options.turno,
+          fecha: options.fecha,
+          btn_reservar: '',
+        },
+      }, (err, res) => {
+        if (err) reject(err);
+
+        resolve(res);
+      });
+    });
   }
 }
 

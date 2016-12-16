@@ -9,8 +9,12 @@ const envVarsSchema = joi.object({
   LOGGER_LEVEL: joi.string()
     .allow(['error', 'warn', 'info', 'verbose', 'debug', 'silly'])
     .default('info'),
-  SCRAPER_URL: joi.string()
-    .default('http://bibing.us.es/estado_salas/BIA'),
+  SCRAPER_ESTADO_URL: joi.string()
+    .default('https://bibing.us.es/estado_salas/BIA'),
+  SCRAPER_RESERVA_URL: joi.string()
+    .default('https://bibing.us.es/reserva_salas/BIA'),
+  SCRAPER_LOGIN_URL: joi.string()
+    .default('https://sso.us.es/CAS/index.php/login?service=https%3A%2F%2Fbibing.us.es%2Freserva_salas%2FBIA'),
 }).unknown()
   .required();
 
@@ -28,7 +32,9 @@ const config = {
     port: envVars.PORT,
   },
   scraper: {
-    url: envVars.SCRAPER_URL,
+    estadoURL: envVars.SCRAPER_ESTADO_URL,
+    loginURL: envVars.SCRAPER_LOGIN_URL,
+    reservaURL: envVars.SCRAPER_RESERVA_URL,
   },
 };
 

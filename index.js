@@ -15,7 +15,7 @@ const logger = new (winston.Logger)({
   ],
 });
 const app = express();
-const scraper = new Scraper(config.scraper.url);
+const scraper = new Scraper(config.scraper);
 const api = new API(app, scraper, logger);
 
 api.listen(config.server.port,
