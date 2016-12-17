@@ -6,7 +6,7 @@ const envVarsSchema = joi.object({
     .default('development'),
   PORT: joi.number()
     .default(8080),
-  LOGGER_LEVEL: joi.string()
+  LOG_LEVEL: joi.string()
     .allow(['error', 'warn', 'info', 'verbose', 'debug', 'silly'])
     .default('info'),
   SCRAPER_ESTADO_URL: joi.string()
@@ -15,6 +15,8 @@ const envVarsSchema = joi.object({
     .default('https://bibing.us.es/reserva_salas/BIA'),
   SCRAPER_LOGIN_URL: joi.string()
     .default('https://sso.us.es/CAS/index.php/login?service=https%3A%2F%2Fbibing.us.es%2Freserva_salas%2FBIA'),
+  API_ROOT: joi.string()
+    .default('https://bigomby.github.io/bibing-salas-api/'),
 }).unknown()
   .required();
 
@@ -30,6 +32,9 @@ const config = {
   },
   server: {
     port: envVars.PORT,
+  },
+  api: {
+    root: envVars.API_ROOT,
   },
   scraper: {
     estadoURL: envVars.SCRAPER_ESTADO_URL,

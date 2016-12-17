@@ -6,16 +6,27 @@ const bodyParser = require('body-parser');
  * @type {winston logger} Winston logger
  */
 module.exports = class API {
-  constructor(app, scraper, logger) {
+  constructor(app, scraper, logger, config) {
     this.scraper = scraper;
     this.app = app;
     this.logger = logger;
 
     this.app.use(bodyParser.json({ type: 'application/json' }));
 
+    this.app.get('/', (req, res) => {
+      const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+      logger.debug('GET / FROM:', ip);
+
+      res.writeHead(302, {
+        Location: config.root,
+      });
+
+      res.end();
+    });
+
     this.app.get('/salas', (req, res) => {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      logger.debug('GET /salas', ip);
+      logger.debug('GET /salas FROM:', ip);
 
       this.scraper.getStatus((err, salas) => {
         if (err) return res.send(500, err);
@@ -25,7 +36,7 @@ module.exports = class API {
 
     this.app.get('/salas/:id', (req, res) => {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      logger.debug(`GET /salas/${req.params.id}`, ip);
+      logger.debug(`GET /salas/${req.params.id} FROM:`, ip);
 
       this.scraper.getStatus((err, salas) => {
         if (err) return res.send(500, err);
@@ -40,7 +51,7 @@ module.exports = class API {
 
     this.app.get('/turnos/:id', (req, res) => {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      logger.debug(`GET /turnos/${req.params.id}`, ip);
+      logger.debug(`GET /turnos/${req.params.id} FROM:`, ip);
 
       this.scraper.getStatus((err, salas) => {
         if (err) return res.send(500, err);
@@ -59,14 +70,13 @@ module.exports = class API {
 
     this.app.post('/reserva', (req, res) => {
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-      logger.debug('POST /reserva}', ip);
+      logger.debug('POST /reserva FROM:', ip);
 
       const fields = ['correo', 'sala', 'turno', 'fecha', 'nombre', 'uvus',
         'usuario', 'password'];
       for (const field of fields) {
         if (!req.body[field]) {
-          return res.send({
-            error: `Missing field: ${field}` });
+          return res.send({ error: `Missing field: ${field}` });
         }
       }
 
