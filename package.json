@@ -1,26 +1,29 @@
 {
-  "name": "reserva_salas_bot",
+  "name": "bibing-salas-api",
+  "description": "API RESTful para acceder al sistema de reserva desalas",
   "version": "0.1.0",
-  "description": "Bot para reservar salas",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ."
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^3.12.2",
-    "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-import": "^2.2.0"
-  },
+  "keywords": [],
+  "author": "Diego Fernández Barrera",
+  "license": "MIT",
+  "main": "app.js",
   "dependencies": {
-    "body-parser": "^1.15.2",
+    "swagger-express-mw": "^0.1.0",
     "cookie": "^0.3.1",
     "express": "^4.14.0",
     "joi": "^10.0.6",
     "jsdom": "^9.8.3",
     "request": "^2.79.0",
     "winston": "^2.3.0"
+  },
+  "devDependencies": {
+    "should": "^7.1.0",
+    "supertest": "^1.0.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-import": "^2.2.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "swagger project test"
   }
 }

@@ -4,51 +4,64 @@ const jsdom = require('jsdom');
 const request = require('request');
 const cookie = require('cookie');
 
+const timeTable = {
+  A: {
+    1: '8:00 - 10:30',
+    2: '10:30 - 12:30',
+    3: '12:30 - 14:30',
+    4: '14:30 - 16:30',
+    5: '16:30 - 18:30',
+    6: '18:30 - 21:00',
+  },
+  B: {
+    1: '8:00 - 11:00',
+    2: '11:00 - 13:00',
+    3: '13:00 - 15:00',
+    4: '15:00 - 17:00',
+    5: '17:00 - 19:00',
+    6: '19:00 - 21:00',
+  },
+};
+
 function createSalas() {
-  return [
-    { id: '1',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '2',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '3',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '4',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '5',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '6',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '7',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '8',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '9',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '10',
-      booked: [null, null, null, null, null, null],
-    },
-    { id: '12',
-      booked: [null, null, null, null, null, null],
-    },
-  ];
+  const salas = [];
+  const salasID = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
+  const turnosID = [1, 2, 3, 4, 5, 6];
+
+  for (const salaID of salasID) {
+    const sala = {
+      id: salaID,
+      turns: [],
+    };
+
+    for (const turnoID of turnosID) {
+      sala.turns.push({
+        id: turnoID,
+        time: salaID <= 6 ? timeTable.A[turnoID] : timeTable.B[turnoID],
+        available: false,
+      });
+    }
+
+    salas.push(sala);
+  }
+
+  return salas;
 }
+
+let instance = null;
 
 class Scraper {
   constructor(options) {
-    if (!options) throw new Error('No options provided');
+    if (!instance) {
+      if (!options) throw new Error('No options provided');
 
-    this.estadoURL = options.estadoURL;
-    this.loginURL = options.loginURL;
-    this.reservaURL = options.reservaURL;
+      instance = this;
+      this.estadoURL = options.estadoURL;
+      this.loginURL = options.loginURL;
+      this.reservaURL = options.reservaURL;
+    }
+
+    return instance;
   }
 
   getStatus(cb) {
@@ -64,8 +77,8 @@ class Scraper {
           .filter(index => index % 7 !== 0)
           .each((index, element) => {
             if (!$(element)) return cb(Error('Can\'t get element'));
-            salas[Math.floor(index / 6)].booked[index % 6] =
-              $(element).text() === 'Reservada';
+            salas[Math.floor(index / 6)].turns[index % 6].available =
+              $(element).text() === 'Libre';
 
             return null;
           });
