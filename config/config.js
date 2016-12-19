@@ -30,11 +30,9 @@ const config = {
   logger: {
     level: envVars.LOG_LEVEL,
   },
-  server: {
-    port: envVars.PORT,
-  },
   api: {
-    root: envVars.API_ROOT,
+    port: envVars.PORT,
+    appRoot: '.',
   },
   scraper: {
     estadoURL: envVars.SCRAPER_ESTADO_URL,
