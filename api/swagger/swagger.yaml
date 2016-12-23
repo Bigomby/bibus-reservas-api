@@ -49,6 +49,27 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/Error"
+  /reservas:
+    x-swagger-router-controller: reservas
+    post:
+      description: Reserva una sala de la biblioteca
+      operationId: reserve
+      parameters:
+        - name: reservation
+          in: body
+          description: Datos de la reserva
+          required: true
+          schema:
+            $ref: "#/definitions/ReservationRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ReservationResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ReservationError"
 
 definitions:
   Room:
@@ -74,10 +95,70 @@ definitions:
         type: string
       available:
         type: boolean
-
+  ReservationResponse:
+    required:
+      - room
+      - turn
+      - reservation
+      - date
+      - time
+    properties:
+      room: 
+        type: integer
+      turn:
+        type: integer
+      reservation:
+        type: string
+      date:
+        type: string
+      time:
+        type: string
+  ReservationRequest:
+      required:
+        - name
+        - uvus
+        - email
+        - room
+        - turn
+        - date
+        - username
+        - password
+      properties:
+        name: 
+          description: Nombre del alumno. Los espacios deben sustituirse por signos '+'
+          type: string
+        uvus:
+          description: Uvus del alumno
+          type: string
+        email:
+          description: Correo para recibir la notificación
+          type: string
+        room:
+          description: Número de la sala
+          type: integer
+        turn:
+          description: Número del turno (Entre 1 y 6)
+          type: integer
+        date:
+          description: Fecha en formato 'dd-mm-aaaa'
+          type: string
+        username:
+          description: Uvus del alumno usado para la autenticación
+          type: string
+        password:
+          description: Contrasela correspondiente al uvus.
+          type: string
   Error:
     required:
       - message
     properties:
       message:
         type: string
+  ReservationError:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+      reservation:
+        $ref: "#/definitions/ReservationResponse"
