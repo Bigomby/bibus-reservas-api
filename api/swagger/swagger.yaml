@@ -45,10 +45,44 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/Room"
+        "404":
+          description: Not Found
+          schema:
+            $ref: "#/definitions/Error"
         default:
           description: Error
           schema:
             $ref: "#/definitions/Error"
+  /reservas/{date}:
+    x-swagger-router-controller: reservas
+    get:
+      description: Obtiene el ID de reserva de una fecha
+      operationId: getReservation
+      parameters:
+        - name: date
+          in: path
+          description: Fecha de la reserva
+          required: true
+          type: string
+        - name: username
+          in: query
+          description: Usuario para realizar autenticación
+          required: true
+          type: string
+        - name: password
+          in: query
+          description: Contraseña para realizar autenticación
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ReservationResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ReservationError"
   /reservas:
     x-swagger-router-controller: reservas
     post:
@@ -69,7 +103,26 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ReservationError"
+            $ref: "#/definitions/Error"
+    delete:
+      description: Reserva una sala de la biblioteca
+      operationId: cancel
+      parameters:
+        - name: cancellation
+          in: body
+          description: Datos de la reserva
+          required: true
+          schema:
+            $ref: "#/definitions/CancelRequest"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CancelResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/Error"
 
 definitions:
   Room:
@@ -147,6 +200,20 @@ definitions:
           type: string
         password:
           description: Contrasela correspondiente al uvus.
+          type: string
+  CancelRequest:
+      required:
+        - reservation
+      properties:
+        reservation: 
+          description: ID de la reserva
+          type: string
+  CancelResponse:
+      required:
+        - reservation
+      properties:
+        reservation: 
+          description: ID de la reserva
           type: string
   Error:
     required:
