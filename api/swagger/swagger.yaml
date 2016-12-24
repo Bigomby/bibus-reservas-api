@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.1.0"
+  version: "0.5.0"
   title: Salas Bibing API
 host: localhost:8080
 basePath: /
@@ -156,7 +156,7 @@ definitions:
       - date
       - time
     properties:
-      room: 
+      room:
         type: integer
       turn:
         type: integer
@@ -177,7 +177,7 @@ definitions:
         - username
         - password
       properties:
-        name: 
+        name:
           description: Nombre del alumno. Los espacios deben sustituirse por signos '+'
           type: string
         uvus:
@@ -205,14 +205,14 @@ definitions:
       required:
         - reservation
       properties:
-        reservation: 
+        reservation:
           description: ID de la reserva
           type: string
   CancelResponse:
       required:
         - reservation
       properties:
-        reservation: 
+        reservation:
           description: ID de la reserva
           type: string
   Error:

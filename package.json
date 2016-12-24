@@ -1,7 +1,7 @@
 {
   "name": "bibing-salas-api",
   "description": "API RESTful para acceder al sistema de reserva desalas",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "keywords": [],
   "author": "Diego Fernández Barrera",
   "license": "MIT",
