@@ -127,19 +127,145 @@ class Scraper {
         url: this.reservaURL,
         jar,
         form: {
-          nombre: options.nombre,
+          nombre: options.name,
           uvus: options.uvus,
-          correo: options.correo,
-          sala: options.sala,
-          turno: options.turno,
-          fecha: options.fecha,
+          correo: options.email,
+          sala: options.room,
+          turno: options.turn,
+          fecha: options.date,
           btn_reservar: '',
         },
-      }, (err, res) => {
-        if (err) reject(err);
+      }, (err) => {
+        if (err) return reject(err);
 
-        resolve(res);
+        return resolve(ticketID);
       });
+    });
+  }
+
+  getReservationID(ticketID, date) {
+    return new Promise((resolve, reject) => {
+      if (!date) return reject('No date provided');
+      if (!ticketID) return reject('No Ticket ID provided');
+
+      const sessionID = `PHPSESSID=${ticketID}`;
+      const jar = request.jar();
+      jar.setCookie(sessionID, this.reservaURL);
+
+      request.post({
+        url: this.reservaURL,
+        jar,
+        form: {
+          sl_tipo: 1,
+          sl_fecha: date,
+        },
+      }, (err, res) => {
+        if (err) return reject(err);
+
+        jsdom.env(
+          res.body,
+          ['http://code.jquery.com/jquery.js'],
+          (jsdomError, window) => {
+            if (jsdomError) reject(jsdomError);
+
+            const $ = window.$;
+            const dateElements = $('select#sl_fecha option');
+
+            dateElements.each((dateIndex, dateElement) => {
+              // Check if the server response date matches the query date
+
+              if ($(dateElement).attr('selected') === 'selected') {
+                if (date !== $(dateElement).attr('value')) {
+                  return reject('Invalid date');
+                }
+
+                const elements = $('table#table1 tbody tr td a');
+                if (elements.length === 0) return reject('Empty table');
+
+                elements.each((index, element) => {
+                  // substring is needed because of an unknown first character
+                  // (the icon)
+                  if ($(element).text().substring(1) === 'Cancelar') {
+                    const salas = createSalas();
+                    resolve({
+                      room: salas[Math.floor(index / 6)].id,
+                      turn: salas[Math.floor(index / 6)].turns[index % 6].id,
+                      time: salas[Math.floor(index / 6)].turns[index % 6].time,
+                      reservation: $(element).attr('href').split('/')[3],
+                      date,
+                    });
+                  }
+
+                  if (index >= elements.length - 1) {
+                    resolve(null);
+                  }
+                });
+              }
+
+              if (dateIndex >= dateElements.length - 1) {
+                return reject('Invalid date');
+              }
+
+              return null;
+            });
+
+            return null;
+          });
+
+        return null;
+      });
+
+      return null;
+    });
+  }
+
+  cancel(ticketID, reservationID) {
+    return new Promise((resolve, reject) => {
+      if (!ticketID) return reject('No Ticket ID provided');
+      if (!reservationID) return reject('No Reservation ID provided');
+
+      const sessionID = `PHPSESSID=${ticketID}`;
+      const jar = request.jar();
+      jar.setCookie(sessionID, this.reservaURL);
+
+      request.post({
+        url: this.reservaURL,
+        jar,
+        form: {
+          reserva_id: reservationID,
+          btn_cancelar: '',
+        },
+      }, (err, res) => {
+        if (err) return reject(err);
+
+        jsdom.env(
+          res.body,
+          ['http://code.jquery.com/jquery.js'],
+          (jsdomError, window) => {
+            if (jsdomError) reject(jsdomError);
+
+            const $ = window.$;
+            const elements = $('table#table1 tbody tr td a');
+            if (elements.length === 0) return reject('Empty table found');
+
+            elements.each((index, element) => {
+              // substring is needed because of an unknown first character
+              if ($(element).text().substring(1) === 'Cancelar') {
+                reject('Resevation could not be cancelled');
+              }
+
+              if (index >= elements.length - 1) {
+                resolve(null);
+              }
+            });
+
+            return null;
+          });
+
+        return null;
+      });
+
+      return null;
     });
   }
 }

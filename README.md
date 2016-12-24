@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/api-documentation-blue.svg)](docs/)
+[![](https://img.shields.io/badge/api-documentation-blue.svg)](https://bigomby.github.io/bibing-salas-api/docs/)
 
 # bibing-salas-api
 
