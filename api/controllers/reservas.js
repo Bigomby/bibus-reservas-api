@@ -14,6 +14,22 @@ const logger = new (winston.Logger)({
   ],
 });
 
+function getReservation(req, res) {
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  logger.debug('GET /reservas/date FROM:', ip);
+
+  scraper
+    .login(req.swagger.params.username.value, req.swagger.params.password.value)
+    .then(location => scraper.getTicketID(location))
+    .then(ticketID => scraper.getReservationID(ticketID, req.swagger.params.date.value))
+    .then((reservation) => {
+      if (reservation) return res.send(reservation);
+
+      return res.status(404).send({ message: 'Reservation not found' });
+    })
+    .catch(err => res.status(500).send({ message: err }));
+}
+
 function reserve(req, res) {
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   logger.debug('POST /reservas FROM:', ip);
@@ -29,10 +45,7 @@ function reserve(req, res) {
             // If a reservation exists for this date, return error and current
             // reservation info
           if (reservation) {
-            res.status(304).send({
-              message: 'There is already a reserved room',
-              reservation,
-            });
+            res.send(reservation);
             // If there is no reservation, take one
           } else {
             scraper.takeSala(ticketID, {
@@ -46,11 +59,15 @@ function reserve(req, res) {
               scraper.getReservationID(ticketID, reservationInfo.date)
                 .then((newReservation) => {
                   res.send(newReservation);
-                });
+                })
+                .catch(err => res.status(500).send({ error: err }));
             });
           }
-        });
+        })
+        .catch((err) => { res.status(500).send({ error: err }); });
     })
+    .catch((err) => { res.status(500).send({ error: err }); });
+}
 
 function cancel(req, res) {
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -66,4 +83,4 @@ function cancel(req, res) {
     .catch(err => res.status(500).send({ message: err }));
 }
 
-module.exports = { reserve, cancel };
+module.exports = { getReservation, reserve, cancel };

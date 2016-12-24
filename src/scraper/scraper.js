@@ -169,6 +169,55 @@ class Scraper {
             if (jsdomError) reject(jsdomError);
 
             const $ = window.$;
+            const dateElements = $('select#sl_fecha option');
+
+            dateElements.each((dateIndex, dateElement) => {
+              // Check if the server response date matches the query date
+
+              if ($(dateElement).attr('selected') === 'selected') {
+                if (date !== $(dateElement).attr('value')) {
+                  return reject('Invalid date');
+                }
+
+                const elements = $('table#table1 tbody tr td a');
+                if (elements.length === 0) return reject('Empty table');
+
+                elements.each((index, element) => {
+                  // substring is needed because of an unknown first character
+                  // (the icon)
+                  if ($(element).text().substring(1) === 'Cancelar') {
+                    const salas = createSalas();
+                    resolve({
+                      room: salas[Math.floor(index / 6)].id,
+                      turn: salas[Math.floor(index / 6)].turns[index % 6].id,
+                      time: salas[Math.floor(index / 6)].turns[index % 6].time,
+                      reservation: $(element).attr('href').split('/')[3],
+                      date,
+                    });
+                  }
+
+                  if (index >= elements.length - 1) {
+                    resolve(null);
+                  }
+                });
+              }
+
+              if (dateIndex >= dateElements.length - 1) {
+                return reject('Invalid date');
+              }
+
+              return null;
+            });
+
+            return null;
+          });
+
+        return null;
+      });
+
+      return null;
+    });
+  }
 
   cancel(ticketID, reservationID) {
     return new Promise((resolve, reject) => {
