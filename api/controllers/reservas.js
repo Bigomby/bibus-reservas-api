@@ -51,7 +51,19 @@ function reserve(req, res) {
           }
         });
     })
-    .catch(err => res.status(500).send({ error: err }));
+
+function cancel(req, res) {
+  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  logger.debug('DELETE /reservas FROM:', ip);
+
+  const cancellationInfo = req.swagger.params.cancellation.value;
+
+  scraper
+    .login(cancellationInfo.username, cancellationInfo.password)
+    .then(location => scraper.getTicketID(location))
+    .then(ticketID => scraper.cancel(ticketID, cancellationInfo.reservation))
+    .then(() => { res.send({ reservation: cancellationInfo.reservation }); })
+    .catch(err => res.status(500).send({ message: err }));
 }
 
-module.exports = { reserve };
+module.exports = { reserve, cancel };
