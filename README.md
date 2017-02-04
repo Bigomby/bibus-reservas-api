@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/Bigomby/bibing-salas-api.svg?branch=master)](https://travis-ci.org/Bigomby/bibing-salas-api)
 [![](https://img.shields.io/badge/api-documentation-blue.svg)](https://bigomby.github.io/bibing-salas-api/docs/)
 
 # bibing-salas-api
