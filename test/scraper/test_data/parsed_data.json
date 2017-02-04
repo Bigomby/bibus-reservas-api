@@ -1,0 +1,298 @@
+[{
+    "id": 1,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 10:30",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "10:30 - 12:30",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "12:30 - 14:30",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "14:30 - 16:30",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "16:30 - 18:30",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "18:30 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 2,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 10:30",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "10:30 - 12:30",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "12:30 - 14:30",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "14:30 - 16:30",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "16:30 - 18:30",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "18:30 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 3,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 10:30",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "10:30 - 12:30",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "12:30 - 14:30",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "14:30 - 16:30",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "16:30 - 18:30",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "18:30 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 4,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 10:30",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "10:30 - 12:30",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "12:30 - 14:30",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "14:30 - 16:30",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "16:30 - 18:30",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "18:30 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 5,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 10:30",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "10:30 - 12:30",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "12:30 - 14:30",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "14:30 - 16:30",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "16:30 - 18:30",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "18:30 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 6,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 10:30",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "10:30 - 12:30",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "12:30 - 14:30",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "14:30 - 16:30",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "16:30 - 18:30",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "18:30 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 7,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 11:00",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "11:00 - 13:00",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "13:00 - 15:00",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "15:00 - 17:00",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "17:00 - 19:00",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "19:00 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 8,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 11:00",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "11:00 - 13:00",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "13:00 - 15:00",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "15:00 - 17:00",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "17:00 - 19:00",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "19:00 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 9,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 11:00",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "11:00 - 13:00",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "13:00 - 15:00",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "15:00 - 17:00",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "17:00 - 19:00",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "19:00 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 10,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 11:00",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "11:00 - 13:00",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "13:00 - 15:00",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "15:00 - 17:00",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "17:00 - 19:00",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "19:00 - 21:00",
+        "available": true
+    }]
+}, {
+    "id": 12,
+    "turns": [{
+        "id": 1,
+        "time": "8:00 - 11:00",
+        "available": true
+    }, {
+        "id": 2,
+        "time": "11:00 - 13:00",
+        "available": true
+    }, {
+        "id": 3,
+        "time": "13:00 - 15:00",
+        "available": true
+    }, {
+        "id": 4,
+        "time": "15:00 - 17:00",
+        "available": true
+    }, {
+        "id": 5,
+        "time": "17:00 - 19:00",
+        "available": true
+    }, {
+        "id": 6,
+        "time": "19:00 - 21:00",
+        "available": true
+    }]
+}]

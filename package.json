@@ -8,6 +8,9 @@
   "main": "app.js",
   "dependencies": {
     "swagger-express-mw": "^0.1.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "sinon": "^1.17.6",
     "cookie": "^0.3.1",
     "express": "^4.14.0",
     "joi": "^10.0.6",

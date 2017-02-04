@@ -64,27 +64,39 @@ class Scraper {
     return instance;
   }
 
-  getStatus(cb) {
-    jsdom.env(
-      this.estadoURL,
-      ['http://code.jquery.com/jquery.js'],
-      (err, window) => {
-        if (err) throw new Error(err);
+  getStatus() {
+    return new Promise((resolve, reject) => {
+      request.get({ url: this.estadoURL }, (err, res, body) => {
+        if (err) return reject(err);
 
-        const salas = createSalas();
-        const $ = window.$;
-        $('table#table1 tbody tr td')
-          .filter(index => index % 7 !== 0)
-          .each((index, element) => {
-            if (!$(element)) return cb(Error('Can\'t get element'));
-            salas[Math.floor(index / 6)].turns[index % 6].available =
-              $(element).text() === 'Libre';
+        jsdom.env(body, ['http://code.jquery.com/jquery.js'],
+          (domError, window) => {
+            if (domError) return reject(domError);
 
-            return null;
+            const salas = createSalas();
+            const $ = window.$;
+            const data = $('table#table1 tbody tr td');
+            if (data.length === 0) {
+              return reject('No salas found');
+            }
+
+            data
+              .filter(index => index % 7 !== 0)
+              .each((index, element) => {
+                if (!$(element)) return reject('Can\'t get element');
+
+                salas[Math.floor(index / 6)].turns[index % 6].available =
+                  $(element).text() === 'Libre';
+
+                return null;
+              });
+
+            return resolve(salas);
           });
 
-        if (typeof cb === 'function') cb(null, salas);
+        return null;
       });
+    });
   }
 
   login(username, password) {
