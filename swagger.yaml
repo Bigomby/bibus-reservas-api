@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  title: Salas Bibing API
+  title: Bibus Reservas API
   description: >
     API RESTful para acceder al sistema de consulta de salas de la
     **Biblioteca de la Universidad de Sevilla**.

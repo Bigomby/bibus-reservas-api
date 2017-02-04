@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Salas Bibing API | API Reference</title>
+    <title>Bibus Reservas API | API Reference</title>
     <link rel="stylesheet" href="stylesheets/foundation.min.css" />
     <link rel="stylesheet" href="stylesheets/spectacle.min.css" />
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <!-- <script src="javascripts/foundation.js"></script> -->
     <script src="javascripts/spectacle.min.js"></script>
   </head>
@@ -19,42 +19,32 @@
         <nav id="nav" role="navigation">
           <h5>API Reference</h5>
           <a href="#introduction">Introduction</a>
-          <h5>Paths</h5>
-          <!-- <section>
-                <a href="#path--reservas">/reservas</a>
-                <ul> -->
-          <!-- <li> -->
-          <a href="#operation--reservas-post"> POST /reservas </a>
-          <!-- </li> -->
-          <!-- <li> -->
-          <a href="#operation--reservas-delete"> DELETE /reservas </a>
-          <!-- </li> -->
-          <!-- </ul>
-              </section> -->
-          <!-- <section>
-                <a href="#path--reservas--date-">/reservas/{date}</a>
-                <ul> -->
-          <!-- <li> -->
-          <a href="#operation--reservas--date--get"> GET /reservas/{date} </a>
-          <!-- </li> -->
-          <!-- </ul>
-              </section> -->
-          <!-- <section>
-                <a href="#path--salas">/salas</a>
-                <ul> -->
-          <!-- <li> -->
-          <a href="#operation--salas-get"> GET /salas </a>
-          <!-- </li> -->
-          <!-- </ul>
-              </section> -->
-          <!-- <section>
-                <a href="#path--salas--roomID-">/salas/{roomID}</a>
-                <ul> -->
-          <!-- <li> -->
-          <a href="#operation--salas--roomID--get"> GET /salas/{roomID} </a>
-          <!-- </li> -->
-          <!-- </ul>
-              </section> -->
+          <h5>Operations</h5>
+          <section>
+            <a href="#tag-Salas">Salas</a>
+            <ul>
+              <li>
+                <a href="#operation--salas-get"> Consultar salas </a>
+              </li>
+              <li>
+                <a href="#operation--salas--roomID--get"> Consultar una sala </a>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <a href="#tag-Reservas">Reservas</a>
+            <ul>
+              <li>
+                <a href="#operation--reservas--date--get"> Consultar reserva </a>
+              </li>
+              <li>
+                <a href="#operation--reservas-post"> Realizar reserva </a>
+              </li>
+              <li>
+                <a href="#operation--reservas-delete"> Cancelar reserva </a>
+              </li>
+            </ul>
+          </section>
           <h5>Schema Definitions</h5>
           <a href="#definition-CancelRequest"> CancelRequest </a>
           <a href="#definition-CancelResponse"> CancelResponse </a>
@@ -73,15 +63,30 @@
         <div class="example-box doc-content"></div>
         <article>
           <div id="introduction" data-traverse-target="introduction">
-            <h1 class="doc-title">Salas Bibing API
+            <h1 class="doc-title">Bibus Reservas API
               <span>API Reference</span>
             </h1>
             <div class="doc-row">
-              <div class="doc-copy"> undefined </div>
+              <div class="doc-copy">
+                <p>API RESTful para acceder al sistema de consulta de salas de la
+                  <strong>Biblioteca de la Universidad de Sevilla</strong>.</p>
+                <p>
+                  <em>Esta API
+                    <strong>no es oficial</strong> ni ha sido desarrollada por ningún miembro de la Biblioteca de la US. No se ofrece ningún tipo de garantía en cuanto a su funcionamiento.</em>
+                </p>
+                <p>
+                  <strong>El autor no se responsabiliza del mal uso que se le pueda dar</strong>.</p>
+                <p>Más información en
+                  <a href="https://bigomby.github.io/bibing-salas-api/">https://bigomby.github.io/bibing-salas-api/</a>
+                </p>
+              </div>
               <div class="doc-examples">
                 <section>
                   <h5>API Endpoint</h5>
-                  <div class="hljs"> <pre><code>https://localhost:8080/</code></pre> </div>
+                  <div class="hljs"> <pre><code>http://api.salas.gonebe.com/</code></pre> </div>
+                  <h5>Contact:
+                    <a href="mailto:bigomby@gmail.com">bigomby@gmail.com</a>
+                  </h5>
                   <!--
                     <h5>Request Content-Types:
                       <span>application/json</span>
@@ -92,7 +97,7 @@
                     </h5>
                   -->
                   <h5>Schemes:
-                    <span>http, https</span>
+                    <span>http</span>
                   </h5>
                   <h5>Version:
                     <span>0.5.0</span>
@@ -101,50 +106,42 @@
               </div>
             </div>
           </div>
-          <h1>Paths</h1>
-          <span id="path--reservas"></span>
-          <div id="operation--reservas-delete" class="operation panel" data-traverse-target="operation--reservas-delete">
+          <h1 id="tag-Salas" class="swagger-summary-tag" data-traverse-target="tag-Salas">Salas</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>Consulta de salas</p>
+            </div>
+          </div>
+          <div id="operation--salas-get" class="operation panel" data-traverse-target="operation--salas-get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Salas">Salas</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
             <h2 class="operation-title">
-              <span class="operation-name">
-                <span class="operation-name">DELETE</span>
-                <span class="operation-path">/reservas</span>
-              </span>
+              <span class="operation-summary">Consultar salas</span>
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
-                <section class="swagger-operation-description">
-                  <p>Reserva una sala de la biblioteca</p>
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/salas</span>
                 </section>
               </div>
             </div>
             <div class="doc-row">
               <div class="doc-copy">
-                <section class="swagger-request-body">
-                  <div class="prop-row">
-                    <div class="prop-name">
-                      <div class="swagger-request-model">
-                        <span class="">
-                          <a class="json-schema-ref" href="#/definitions/CancelRequest">CancelRequest</a>
-                        </span>
-                      </div>
-                    </div>
-                    <div class="prop-value columns small-6">
-                      <!-- <div class="swagger-request-description"> -->
-                      <p>Datos de la reserva</p>
-                      <!-- </div> -->
-                    </div>
-                  </div>
+                <section class="swagger-operation-description">
+                  <p>Devuelve información sore las salas de la Biblioteca</p>
                 </section>
               </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Request Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;reservation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
             </div>
             <div class="doc-row">
               <div class="doc-copy">
@@ -153,8 +150,8 @@
                     <div class="prop-name">
                       <div class="prop-title">200 OK</div>
                       <div class="prop-ref">
-                        <span class="">
-                          <a class="json-schema-ref" href="#/definitions/CancelResponse">CancelResponse</a>
+                        <span class="json-schema-ref-array">
+                          <a class="json-schema-ref" href="#/definitions/Room">Room</a>
                         </span>
                       </div>
                       <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
@@ -184,16 +181,19 @@
                   <h5>Response Example
                     <span>(200 OK)</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;reservation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
-}
+                  <div class="hljs"><pre><code class="hljs json">[
+  {
+    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+    <span class="hljs-attr">&quot;turns&quot;</span>: <span class="hljs-string">&quot;array&quot;</span>
+  }
+]
 </code></pre> </div>
                 </section>
                 <section>
                   <h5>Response Example
                     <span>(default )</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
+                  <div class="hljs"><pre><code class="hljs json">{
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
 }
 </code></pre> </div>
@@ -201,55 +201,59 @@
               </div>
             </div>
           </div>
-          <div id="operation--reservas-post" class="operation panel" data-traverse-target="operation--reservas-post">
+          <div id="operation--salas--roomID--get" class="operation panel" data-traverse-target="operation--salas--roomID--get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Salas">Salas</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
             <h2 class="operation-title">
-              <span class="operation-name">
-                <span class="operation-name">POST</span>
-                <span class="operation-path">/reservas</span>
-              </span>
+              <span class="operation-summary">Consultar una sala</span>
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
-                <section class="swagger-operation-description">
-                  <p>Reserva una sala de la biblioteca</p>
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/salas/{roomID}</span>
                 </section>
               </div>
             </div>
             <div class="doc-row">
               <div class="doc-copy">
-                <section class="swagger-request-body">
-                  <div class="prop-row">
+                <section class="swagger-operation-description">
+                  <p>Devuelve información sore una sala de la Biblioteca</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-params">
+                  <div class="prop-row prop-group">
                     <div class="prop-name">
-                      <div class="swagger-request-model">
-                        <span class="">
-                          <a class="json-schema-ref" href="#/definitions/ReservationRequest">ReservationRequest</a>
-                        </span>
-                      </div>
+                      <div class="prop-title">roomID</div>
+                      <span class="json-property-required"></span>
                     </div>
-                    <div class="prop-value columns small-6">
-                      <!-- <div class="swagger-request-description"> -->
-                      <p>Datos de la reserva</p>
-                      <!-- </div> -->
+                    <div class="prop-value">
+                      <p>Room number</p>
                     </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">type</div>
+                    <div class="prop-value">
+                      <span class="json-property-type">integer</span>
+                      <span class="json-property-range" title="Value limits"></span>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-inner">
+                    <div class="prop-name param-label">in</div>
+                    <div class="prop-value">path</div>
                   </div>
                 </section>
               </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Request Example</h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;room&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
-  <span class="hljs-attr">&quot;turn&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
-  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;uvus&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
-}
-</code></pre> </div>
-                </section>
-              </div>
+              <div class="doc-examples"></div>
             </div>
             <div class="doc-row">
               <div class="doc-copy">
@@ -259,13 +263,27 @@
                       <div class="prop-title">200 OK</div>
                       <div class="prop-ref">
                         <span class="">
-                          <a class="json-schema-ref" href="#/definitions/ReservationResponse">ReservationResponse</a>
+                          <a class="json-schema-ref" href="#/definitions/Room">Room</a>
                         </span>
                       </div>
                       <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
                       <p>Success</p>
+                    </div>
+                  </div>
+                  <div class="prop-row prop-group">
+                    <div class="prop-name">
+                      <div class="prop-title">404 Not Found</div>
+                      <div class="prop-ref">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
+                        </span>
+                      </div>
+                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
+                    </div>
+                    <div class="prop-value">
+                      <p>Not Found</p>
                     </div>
                   </div>
                   <div class="prop-row prop-group">
@@ -289,12 +307,18 @@
                   <h5>Response Example
                     <span>(200 OK)</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;reservation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;room&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
-  <span class="hljs-attr">&quot;time&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
-  <span class="hljs-attr">&quot;turn&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>
+                  <div class="hljs"><pre><code class="hljs json">{
+  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;turns&quot;</span>: <span class="hljs-string">&quot;array&quot;</span>
+}
+</code></pre> </div>
+                </section>
+                <section>
+                  <h5>Response Example
+                    <span>(404 Not Found)</span>
+                  </h5>
+                  <div class="hljs"><pre><code class="hljs json">{
+  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
 }
 </code></pre> </div>
                 </section>
@@ -302,7 +326,7 @@
                   <h5>Response Example
                     <span>(default )</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
+                  <div class="hljs"><pre><code class="hljs json">{
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
 }
 </code></pre> </div>
@@ -310,18 +334,36 @@
               </div>
             </div>
           </div>
-          <span id="path--reservas--date-"></span>
+          <h1 id="tag-Reservas" class="swagger-summary-tag" data-traverse-target="tag-Reservas">Reservas</h1>
+          <div class="tag-description doc-row">
+            <div class="doc-copy">
+              <p>Reserva de salas</p>
+            </div>
+          </div>
           <div id="operation--reservas--date--get" class="operation panel" data-traverse-target="operation--reservas--date--get">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Reservas">Reservas</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
             <h2 class="operation-title">
-              <span class="operation-name">
-                <span class="operation-name">GET</span>
-                <span class="operation-path">/reservas/{date}</span>
-              </span>
+              <span class="operation-summary">Consultar reserva</span>
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="swagger-operation-path">
+                  <span class="operation-method">GET</span>
+                  <span class="operation-path">/reservas/{date}</span>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
                 <section class="swagger-operation-description">
-                  <p>Obtiene el ID de reserva de una fecha</p>
+                  <p>Obtiene el ID de una reserva dada una fecha</p>
                 </section>
               </div>
             </div>
@@ -430,7 +472,7 @@
                   <h5>Response Example
                     <span>(200 OK)</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
+                  <div class="hljs"><pre><code class="hljs json">{
   <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
   <span class="hljs-attr">&quot;reservation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
   <span class="hljs-attr">&quot;room&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
@@ -443,7 +485,7 @@
                   <h5>Response Example
                     <span>(default )</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
+                  <div class="hljs"><pre><code class="hljs json">{
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
   <span class="hljs-attr">&quot;reservation&quot;</span>: {
     <span class="hljs-attr">&quot;$ref&quot;</span>: <span class="hljs-string"><a href="#definition-ReservationResponse">&quot;#/definitions/ReservationResponse&quot;</a></span>
@@ -454,24 +496,68 @@
               </div>
             </div>
           </div>
-          <span id="path--salas"></span>
-          <div id="operation--salas-get" class="operation panel" data-traverse-target="operation--salas-get">
+          <div id="operation--reservas-post" class="operation panel" data-traverse-target="operation--reservas-post">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Reservas">Reservas</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
             <h2 class="operation-title">
-              <span class="operation-name">
-                <span class="operation-name">GET</span>
-                <span class="operation-path">/salas</span>
-              </span>
+              <span class="operation-summary">Realizar reserva</span>
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
-                <section class="swagger-operation-description">
-                  <p>Devuelve información sore las salas de la Biblioteca</p>
+                <section class="swagger-operation-path">
+                  <span class="operation-method">POST</span>
+                  <span class="operation-path">/reservas</span>
                 </section>
               </div>
             </div>
             <div class="doc-row">
-              <div class="doc-copy"> </div>
-              <div class="doc-examples"></div>
+              <div class="doc-copy">
+                <section class="swagger-operation-description">
+                  <p>Reserva una sala de la biblioteca</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
+                    <div class="prop-name">
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/ReservationRequest">ReservationRequest</a>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>Datos de la reserva</p>
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Example</h5>
+                  <div class="hljs"><pre><code class="hljs json">{
+  <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;email&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;password&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;room&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;turn&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;username&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;uvus&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
             </div>
             <div class="doc-row">
               <div class="doc-copy">
@@ -480,8 +566,8 @@
                     <div class="prop-name">
                       <div class="prop-title">200 OK</div>
                       <div class="prop-ref">
-                        <span class="json-schema-ref-array">
-                          <a class="json-schema-ref" href="#/definitions/Room">Room</a>
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/ReservationResponse">ReservationResponse</a>
                         </span>
                       </div>
                       <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
@@ -511,19 +597,20 @@
                   <h5>Response Example
                     <span>(200 OK)</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">[
-  {
-    <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
-    <span class="hljs-attr">&quot;turns&quot;</span>: <span class="hljs-string">&quot;array&quot;</span>
-  }
-]
+                  <div class="hljs"><pre><code class="hljs json">{
+  <span class="hljs-attr">&quot;date&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;reservation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;room&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
+  <span class="hljs-attr">&quot;time&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>,
+  <span class="hljs-attr">&quot;turn&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>
+}
 </code></pre> </div>
                 </section>
                 <section>
                   <h5>Response Example
                     <span>(default )</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
+                  <div class="hljs"><pre><code class="hljs json">{
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
 }
 </code></pre> </div>
@@ -531,47 +618,61 @@
               </div>
             </div>
           </div>
-          <span id="path--salas--roomID-"></span>
-          <div id="operation--salas--roomID--get" class="operation panel" data-traverse-target="operation--salas--roomID--get">
+          <div id="operation--reservas-delete" class="operation panel" data-traverse-target="operation--reservas-delete">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Reservas">Reservas</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
             <h2 class="operation-title">
-              <span class="operation-name">
-                <span class="operation-name">GET</span>
-                <span class="operation-path">/salas/{roomID}</span>
-              </span>
+              <span class="operation-summary">Cancelar reserva</span>
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
-                <section class="swagger-operation-description">
-                  <p>Devuelve información sore una sala de la Biblioteca</p>
+                <section class="swagger-operation-path">
+                  <span class="operation-method">DELETE</span>
+                  <span class="operation-path">/reservas</span>
                 </section>
               </div>
             </div>
             <div class="doc-row">
               <div class="doc-copy">
-                <section class="swagger-request-params">
-                  <div class="prop-row prop-group">
+                <section class="swagger-operation-description">
+                  <p>Cancela una reserva de una sala de la biblioteca</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body">
+                  <div class="prop-row">
                     <div class="prop-name">
-                      <div class="prop-title">roomID</div>
-                      <span class="json-property-required"></span>
+                      <div class="swagger-request-model">
+                        <span class="">
+                          <a class="json-schema-ref" href="#/definitions/CancelRequest">CancelRequest</a>
+                        </span>
+                      </div>
                     </div>
-                    <div class="prop-value">
-                      <p>Room number</p>
+                    <div class="prop-value columns small-6">
+                      <!-- <div class="swagger-request-description"> -->
+                      <p>Datos de la reserva</p>
+                      <!-- </div> -->
                     </div>
-                  </div>
-                  <div class="prop-row prop-inner">
-                    <div class="prop-name param-label">type</div>
-                    <div class="prop-value">
-                      <span class="json-property-type">integer</span>
-                      <span class="json-property-range" title="Value limits"></span>
-                    </div>
-                  </div>
-                  <div class="prop-row prop-inner">
-                    <div class="prop-name param-label">in</div>
-                    <div class="prop-value">path</div>
                   </div>
                 </section>
               </div>
-              <div class="doc-examples"></div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Request Example</h5>
+                  <div class="hljs"><pre><code class="hljs json">{
+  <span class="hljs-attr">&quot;reservation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+}
+</code></pre> </div>
+                </section>
+              </div>
             </div>
             <div class="doc-row">
               <div class="doc-copy">
@@ -581,27 +682,13 @@
                       <div class="prop-title">200 OK</div>
                       <div class="prop-ref">
                         <span class="">
-                          <a class="json-schema-ref" href="#/definitions/Room">Room</a>
+                          <a class="json-schema-ref" href="#/definitions/CancelResponse">CancelResponse</a>
                         </span>
                       </div>
                       <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
                     </div>
                     <div class="prop-value">
                       <p>Success</p>
-                    </div>
-                  </div>
-                  <div class="prop-row prop-group">
-                    <div class="prop-name">
-                      <div class="prop-title">404 Not Found</div>
-                      <div class="prop-ref">
-                        <span class="">
-                          <a class="json-schema-ref" href="#/definitions/Error">Error</a>
-                        </span>
-                      </div>
-                      <!-- <span class="swagger-global"></span> <span class="json-schema-reference"><a href=""></a></span> -->
-                    </div>
-                    <div class="prop-value">
-                      <p>Not Found</p>
                     </div>
                   </div>
                   <div class="prop-row prop-group">
@@ -625,18 +712,8 @@
                   <h5>Response Example
                     <span>(200 OK)</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span>,
-  <span class="hljs-attr">&quot;turns&quot;</span>: <span class="hljs-string">&quot;array&quot;</span>
-}
-</code></pre> </div>
-                </section>
-                <section>
-                  <h5>Response Example
-                    <span>(404 Not Found)</span>
-                  </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
-  <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
+                  <div class="hljs"><pre><code class="hljs json">{
+  <span class="hljs-attr">&quot;reservation&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
 }
 </code></pre> </div>
                 </section>
@@ -644,7 +721,7 @@
                   <h5>Response Example
                     <span>(default )</span>
                   </h5>
-                  <div class="hljs"><pre><code class="lang-json">{
+                  <div class="hljs"><pre><code class="hljs json">{
   <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;string&quot;</span>
 }
 </code></pre> </div>
@@ -662,6 +739,10 @@
                 <span class="json-property-range" title="Value limits"></span>
               </span>
             </h2>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
             <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
@@ -689,6 +770,10 @@
               </span>
             </h2>
             <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
                   <dl>
@@ -715,6 +800,10 @@
               </span>
             </h2>
             <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
                   <dl>
@@ -737,6 +826,10 @@
                 <span class="json-property-range" title="Value limits"></span>
               </span>
             </h2>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
             <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
@@ -769,6 +862,10 @@
                 <span class="json-property-range" title="Value limits"></span>
               </span>
             </h2>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
             <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
@@ -859,6 +956,10 @@
               </span>
             </h2>
             <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
                   <dl>
@@ -906,6 +1007,10 @@
               </span>
             </h2>
             <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
+            <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
                   <dl>
@@ -934,6 +1039,10 @@
                 <span class="json-property-range" title="Value limits"></span>
               </span>
             </h2>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples"></div>
+            </div>
             <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-properties">
