@@ -1,32 +1,42 @@
 {
   "name": "bibing-salas-api",
-  "description": "API RESTful para acceder al sistema de reserva desalas",
+  "description": "API RESTful para acceder al sistema de reserva de salas",
   "version": "0.5.0",
   "keywords": [],
   "author": "Diego Fernández Barrera",
   "license": "MIT",
-  "main": "app.js",
+  "main": "dist/src/app.js",
+  "repository": "https://github.com/Bigomby/bibing-salas-api/tree/develop",
   "dependencies": {
-    "swagger-express-mw": "^0.1.0",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "sinon": "^1.17.6",
     "cookie": "^0.3.1",
     "express": "^4.14.0",
     "joi": "^10.0.6",
     "jsdom": "^9.8.3",
     "request": "^2.79.0",
+    "swagger-express-mw": "^0.1.0",
     "winston": "^2.3.0"
   },
   "devDependencies": {
+    "@types/chai-as-promised": "0.0.29",
+    "@types/express": "^4.0.35",
+    "@types/jsdom": "^2.0.29",
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
+    "@types/winston": "^2.2.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-typescript": "^3.1.4",
     "should": "^7.1.0",
-    "supertest": "^1.0.0",
-    "eslint": "^3.12.2",
-    "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-import": "^2.2.0"
+    "sinon": "^1.17.6",
+    "spectacle-docs": "^0.7.0",
+    "typescript": "^2.1.5"
   },
   "scripts": {
-    "start": "node app.js",
-    "test": "swagger project test"
+    "app": "node dist/src/app.js",
+    "test": "node_modules/.bin/gulp test",
+    "build": "node_modules/.bin/gulp build",
+    "docs": "node_modules/.bin/spectacle swagger.yaml -t docs"
   }
 }

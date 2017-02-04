@@ -10,10 +10,11 @@ branches:
 
 node_js:
   - --lts
+  - stable
 
 install:
   - npm install
-  - npm install -g swagger
 
 script:
-  - npm test
+  - npm run build
+  - npm run test

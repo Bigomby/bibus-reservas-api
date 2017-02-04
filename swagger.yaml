@@ -1,21 +1,44 @@
 swagger: "2.0"
 info:
-  version: "0.5.0"
   title: Salas Bibing API
-host: localhost:8080
+  description: >
+    API RESTful para acceder al sistema de consulta de salas de la
+    **Biblioteca de la Universidad de Sevilla**.
+
+
+    _Esta API **no es oficial** ni ha sido desarrollada por ningún miembro de
+    la Biblioteca de la US. No se ofrece ningún tipo de garantía en cuanto a
+    su funcionamiento._
+
+
+    **El autor no se responsabiliza del mal uso que se le pueda dar**.
+
+
+    Más información en https://bigomby.github.io/bibing-salas-api/
+  version: 0.5.0
+  contact:
+    email: bigomby@gmail.com
+host: api.salas.gonebe.com
 basePath: /
 schemes:
   - http
-  - https
 consumes:
   - application/json
 produces:
   - application/json
 
+tags:
+  - name: Salas
+    description: Consulta de salas
+  - name: Reservas
+    description: Reserva de salas
+
 paths:
   /salas:
     x-swagger-router-controller: salas
     get:
+      tags: [Salas]
+      summary: Consultar salas
       description: Devuelve información sore las salas de la Biblioteca
       operationId: getAll
       responses:
@@ -32,6 +55,8 @@ paths:
   /salas/{roomID}:
     x-swagger-router-controller: salas
     get:
+      tags: [Salas]
+      summary: Consultar una sala
       description: Devuelve información sore una sala de la Biblioteca
       operationId: get
       parameters:
@@ -56,7 +81,9 @@ paths:
   /reservas/{date}:
     x-swagger-router-controller: reservas
     get:
-      description: Obtiene el ID de reserva de una fecha
+      tags: [Reservas]
+      summary: Consultar reserva
+      description: Obtiene el ID de una reserva dada una fecha
       operationId: getReservation
       parameters:
         - name: date
@@ -86,6 +113,8 @@ paths:
   /reservas:
     x-swagger-router-controller: reservas
     post:
+      tags: [Reservas]
+      summary: Realizar reserva
       description: Reserva una sala de la biblioteca
       operationId: reserve
       parameters:
@@ -105,7 +134,9 @@ paths:
           schema:
             $ref: "#/definitions/Error"
     delete:
-      description: Reserva una sala de la biblioteca
+      tags: [Reservas]
+      summary: Cancelar reserva
+      description: Cancela una reserva de una sala de la biblioteca
       operationId: cancel
       parameters:
         - name: cancellation
