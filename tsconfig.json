@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "dist",
+    "types": ["mocha"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "./swagger.yaml",
+    "config/config.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

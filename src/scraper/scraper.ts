@@ -1,25 +1,25 @@
 /* eslint class-methods-use-this: ["error", { "exceptMethods": ["getTicketID"] }] */
 
-const jsdom = require('jsdom');
-const request = require('request');
-const cookie = require('cookie');
+import * as request from "request";
+import * as cookie from "cookie";
+import * as jsdom from "jsdom";
 
 const timeTable = {
   A: {
-    1: '8:00 - 10:30',
-    2: '10:30 - 12:30',
-    3: '12:30 - 14:30',
-    4: '14:30 - 16:30',
-    5: '16:30 - 18:30',
-    6: '18:30 - 21:00',
+    1: "8:00 - 10:30",
+    2: "10:30 - 12:30",
+    3: "12:30 - 14:30",
+    4: "14:30 - 16:30",
+    5: "16:30 - 18:30",
+    6: "18:30 - 21:00",
   },
   B: {
-    1: '8:00 - 11:00',
-    2: '11:00 - 13:00',
-    3: '13:00 - 15:00',
-    4: '15:00 - 17:00',
-    5: '17:00 - 19:00',
-    6: '19:00 - 21:00',
+    1: "8:00 - 11:00",
+    2: "11:00 - 13:00",
+    3: "13:00 - 15:00",
+    4: "15:00 - 17:00",
+    5: "17:00 - 19:00",
+    6: "19:00 - 21:00",
   },
 };
 
@@ -51,9 +51,13 @@ function createSalas() {
 let instance = null;
 
 class Scraper {
+  estadoURL;
+  loginURL;
+  reservaURL;
+
   constructor(options) {
     if (!instance) {
-      if (!options) throw new Error('No options provided');
+      if (!options) throw new Error("No options provided");
 
       instance = this;
       this.estadoURL = options.estadoURL;
@@ -64,27 +68,38 @@ class Scraper {
     return instance;
   }
 
-  getStatus(cb) {
-    jsdom.env(
-      this.estadoURL,
-      ['http://code.jquery.com/jquery.js'],
-      (err, window) => {
-        if (err) throw new Error(err);
+  getStatus() {
+    return new Promise((resolve, reject) => {
+      request.get({ url: this.estadoURL }, (err, res, body) => {
+        if (err) return reject(err);
 
-        const salas = createSalas();
-        const $ = window.$;
-        $('table#table1 tbody tr td')
-          .filter(index => index % 7 !== 0)
-          .each((index, element) => {
-            if (!$(element)) return cb(Error('Can\'t get element'));
-            salas[Math.floor(index / 6)].turns[index % 6].available =
-              $(element).text() === 'Libre';
+        jsdom.env(body, ["http://code.jquery.com/jquery.js"],
+          (domError, window) => {
+            if (domError) return reject(domError);
 
-            return null;
+            const salas = createSalas();
+            const $ = window.$;
+            const data = $("table#table1 tbody tr td");
+            if (data.length === 0) {
+              return reject("No salas found");
+            }
+
+            data.filter(index => index % 7 !== 0)
+              .each((index, element) => {
+                if (!$(element)) return reject("Can\"t get element");
+
+                salas[Math.floor(index / 6)].turns[index % 6].available =
+                  $(element).text() === "Libre";
+
+                return null;
+              });
+
+            return resolve(salas);
           });
 
-        if (typeof cb === 'function') cb(null, salas);
+        return null;
       });
+    });
   }
 
   login(username, password) {
@@ -92,8 +107,8 @@ class Scraper {
       request.post({
         url: this.loginURL,
         form: {
-          adAS_i18n_theme: 'es',
-          adAS_mode: 'authn',
+          adAS_i18n_theme: "es",
+          adAS_mode: "authn",
           adAS_username: username,
           adAS_password: password,
         },
@@ -112,7 +127,7 @@ class Scraper {
       }, (err, response) => {
         if (err) reject(err);
 
-        resolve(cookie.parse(response.headers['set-cookie'].pop()).PHPSESSID);
+        resolve(cookie.parse(response.headers["set-cookie"].pop()).PHPSESSID);
       });
     });
   }
@@ -133,7 +148,7 @@ class Scraper {
           sala: options.room,
           turno: options.turn,
           fecha: options.date,
-          btn_reservar: '',
+          btn_reservar: "",
         },
       }, (err) => {
         if (err) return reject(err);
@@ -145,8 +160,8 @@ class Scraper {
 
   getReservationID(ticketID, date) {
     return new Promise((resolve, reject) => {
-      if (!date) return reject('No date provided');
-      if (!ticketID) return reject('No Ticket ID provided');
+      if (!date) return reject("No date provided");
+      if (!ticketID) return reject("No Ticket ID provided");
 
       const sessionID = `PHPSESSID=${ticketID}`;
       const jar = request.jar();
@@ -164,34 +179,34 @@ class Scraper {
 
         jsdom.env(
           res.body,
-          ['http://code.jquery.com/jquery.js'],
+          ["http://code.jquery.com/jquery.js"],
           (jsdomError, window) => {
             if (jsdomError) reject(jsdomError);
 
             const $ = window.$;
-            const dateElements = $('select#sl_fecha option');
+            const dateElements = $("select#sl_fecha option");
 
             dateElements.each((dateIndex, dateElement) => {
               // Check if the server response date matches the query date
 
-              if ($(dateElement).attr('selected') === 'selected') {
-                if (date !== $(dateElement).attr('value')) {
-                  return reject('Invalid date');
+              if ($(dateElement).attr("selected") === "selected") {
+                if (date !== $(dateElement).attr("value")) {
+                  return reject("Invalid date");
                 }
 
-                const elements = $('table#table1 tbody tr td a');
-                if (elements.length === 0) return reject('Empty table');
+                const elements = $("table#table1 tbody tr td a");
+                if (elements.length === 0) return reject("Empty table");
 
                 elements.each((index, element) => {
                   // substring is needed because of an unknown first character
                   // (the icon)
-                  if ($(element).text().substring(1) === 'Cancelar') {
+                  if ($(element).text().substring(1) === "Cancelar") {
                     const salas = createSalas();
                     resolve({
                       room: salas[Math.floor(index / 6)].id,
                       turn: salas[Math.floor(index / 6)].turns[index % 6].id,
                       time: salas[Math.floor(index / 6)].turns[index % 6].time,
-                      reservation: $(element).attr('href').split('/')[3],
+                      reservation: $(element).attr("href").split("/")[3],
                       date,
                     });
                   }
@@ -203,7 +218,7 @@ class Scraper {
               }
 
               if (dateIndex >= dateElements.length - 1) {
-                return reject('Invalid date');
+                return reject("Invalid date");
               }
 
               return null;
@@ -221,8 +236,8 @@ class Scraper {
 
   cancel(ticketID, reservationID) {
     return new Promise((resolve, reject) => {
-      if (!ticketID) return reject('No Ticket ID provided');
-      if (!reservationID) return reject('No Reservation ID provided');
+      if (!ticketID) return reject("No Ticket ID provided");
+      if (!reservationID) return reject("No Reservation ID provided");
 
       const sessionID = `PHPSESSID=${ticketID}`;
       const jar = request.jar();
@@ -233,25 +248,25 @@ class Scraper {
         jar,
         form: {
           reserva_id: reservationID,
-          btn_cancelar: '',
+          btn_cancelar: "",
         },
       }, (err, res) => {
         if (err) return reject(err);
 
         jsdom.env(
           res.body,
-          ['http://code.jquery.com/jquery.js'],
+          ["http://code.jquery.com/jquery.js"],
           (jsdomError, window) => {
             if (jsdomError) reject(jsdomError);
 
             const $ = window.$;
-            const elements = $('table#table1 tbody tr td a');
-            if (elements.length === 0) return reject('Empty table found');
+            const elements = $("table#table1 tbody tr td a");
+            if (elements.length === 0) return reject("Empty table found");
 
             elements.each((index, element) => {
               // substring is needed because of an unknown first character
-              if ($(element).text().substring(1) === 'Cancelar') {
-                reject('Resevation could not be cancelled');
+              if ($(element).text().substring(1) === "Cancelar") {
+                reject("Resevation could not be cancelled");
               }
 
               if (index >= elements.length - 1) {
@@ -270,4 +285,4 @@ class Scraper {
   }
 }
 
-module.exports = Scraper;
+export default Scraper;

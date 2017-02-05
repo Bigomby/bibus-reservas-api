@@ -1,7 +1,6 @@
-const winston = require('winston');
-
-const Scraper = require('../../src/scraper/scraper');
-const config = require('../../config/config');
+import * as winston from "winston";
+import Scraper from "../../scraper/scraper";
+import config from "../../../config/config";
 
 const scraper = new Scraper(config.scraper);
 const logger = new (winston.Logger)({
@@ -15,8 +14,8 @@ const logger = new (winston.Logger)({
 });
 
 function getReservation(req, res) {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  logger.debug('GET /reservas/date FROM:', ip);
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  logger.debug("GET /reservas/date FROM:", ip);
 
   scraper
     .login(req.swagger.params.username.value, req.swagger.params.password.value)
@@ -25,14 +24,14 @@ function getReservation(req, res) {
     .then((reservation) => {
       if (reservation) return res.send(reservation);
 
-      return res.status(404).send({ message: 'Reservation not found' });
+      return res.status(404).send({ message: "Reservation not found" });
     })
     .catch(err => res.status(500).send({ message: err }));
 }
 
 function reserve(req, res) {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  logger.debug('POST /reservas FROM:', ip);
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  logger.debug("POST /reservas FROM:", ip);
 
   const reservationInfo = req.swagger.params.reservation.value;
 
@@ -42,8 +41,8 @@ function reserve(req, res) {
     .then((ticketID) => {
       scraper.getReservationID(ticketID, reservationInfo.date)
         .then((reservation) => {
-            // If a reservation exists for this date, return error and current
-            // reservation info
+          // If a reservation exists for this date, return error and current
+          // reservation info
           if (reservation) {
             res.send(reservation);
             // If there is no reservation, take one
@@ -70,8 +69,8 @@ function reserve(req, res) {
 }
 
 function cancel(req, res) {
-  const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  logger.debug('DELETE /reservas FROM:', ip);
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  logger.debug("DELETE /reservas FROM:", ip);
 
   const cancellationInfo = req.swagger.params.cancellation.value;
 
@@ -83,4 +82,4 @@ function cancel(req, res) {
     .catch(err => res.status(500).send({ message: err }));
 }
 
-module.exports = { getReservation, reserve, cancel };
+export = { getReservation, reserve, cancel };

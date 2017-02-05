@@ -1,4 +1,4 @@
-const joi = require('joi');
+import * as joi from 'joi';
 
 const envVarsSchema = joi.object({
   NODE_ENV: joi.string()
@@ -32,7 +32,8 @@ const config = {
   },
   api: {
     port: envVars.PORT,
-    appRoot: '.',
+    appRoot: 'dist/src',
+    swaggerFile: 'swagger.yaml',
   },
   scraper: {
     estadoURL: envVars.SCRAPER_ESTADO_URL,
@@ -41,4 +42,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;
