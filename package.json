@@ -8,12 +8,16 @@
   "main": "dist/src/app.js",
   "repository": "https://github.com/Bigomby/bibing-salas-api/tree/develop",
   "dependencies": {
+    "typescript": "^2.1.5",
     "cookie": "^0.3.1",
     "express": "^4.14.0",
     "joi": "^10.0.6",
     "jsdom": "^9.8.3",
     "request": "^2.79.0",
     "swagger-express-mw": "^0.1.0",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.1.4",
+    "gulp-mocha": "^3.0.1",
     "winston": "^2.3.0"
   },
   "devDependencies": {
@@ -25,13 +29,9 @@
     "@types/winston": "^2.2.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^3.0.1",
-    "gulp-typescript": "^3.1.4",
     "should": "^7.1.0",
     "sinon": "^1.17.6",
-    "spectacle-docs": "^0.7.0",
-    "typescript": "^2.1.5"
+    "spectacle-docs": "^0.7.0"
   },
   "scripts": {
     "app": "node dist/src/app.js",
