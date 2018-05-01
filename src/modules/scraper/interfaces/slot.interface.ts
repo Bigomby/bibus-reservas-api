@@ -1,9 +1,4 @@
-export enum Status {
-  Available = 'available',
-  Reserved = 'reserved',
-  Closed = 'closed',
-  Unknown = 'unknown',
-}
+import { Status } from '../enums/status.enum';
 
 export interface Slot {
   readonly status: Status;

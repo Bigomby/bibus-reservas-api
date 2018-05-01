@@ -1,4 +1,4 @@
-export interface RoomStatusInfo {
+export interface Library {
   readonly url: string;
   readonly selectors: {
     readonly headerSelector: string;

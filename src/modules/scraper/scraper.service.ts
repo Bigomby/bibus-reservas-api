@@ -1,10 +1,12 @@
-import { Component } from '@nestjs/common';
+import { Component, NotFoundException } from '@nestjs/common';
 import { Vector, Option } from 'prelude.ts';
 import * as cheerio from 'cheerio';
 import axios from 'axios';
+import * as config from 'config';
 
-import { Status, Slot } from './interfaces/slot.interface';
-import { RoomStatusInfo } from './interfaces/room-status-info.interface';
+import { Slot } from './interfaces/slot.interface';
+import { Status } from './enums/status.enum';
+import { Library } from './interfaces/library.interface';
 
 export type Room = { name?: string; capacity?: number; slots: Array<Slot> };
 type FoldingRoom = { n: Option<string>; c: Option<number>; s: Option<Slot> };
@@ -13,17 +15,17 @@ const ROOM_NAME_CLASS = 'usrTituloSala well';
 
 @Component()
 export class ScraperService {
-  public async scrapeRooms(info: RoomStatusInfo): Promise<Array<Room>> {
-    const { data } = await axios.get(info.url);
+  public async scrapeRooms(library: Library): Promise<Array<Room>> {
+    const { data } = await axios.get(library.url);
     const $ = cheerio.load(data);
 
-    const headers = $(info.selectors.headerSelector)
+    const headers = $(library.selectors.headerSelector)
       .toArray()
       .filter(elment => elment.firstChild.childNodes.length > 1)
       .map(node => node.firstChild)
       .map(parseHeaders);
 
-    const content = $(info.selectors.contentSelector)
+    const content = $(library.selectors.contentSelector)
       .toArray()
       .map(node => node.childNodes.map(parseContent));
 
