@@ -1,7 +1,8 @@
 {
-  "name": "nest-typescript-starter",
-  "version": "1.0.0",
-  "description": "Nest TypeScript starter repository",
+  "name": "BIBUS Room reservation API",
+  "version": "0.1.0",
+  "description":
+    "API to check and reserve rooms on the Universty of Sevilla library",
   "license": "MIT",
   "scripts": {
     "format": "prettier --write \"**/*.ts\"",
