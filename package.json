@@ -1,5 +1,5 @@
 {
-  "name": "BIBUS Room reservation API",
+  "name": "bibus-reservas-api",
   "version": "0.1.0",
   "description":
     "API to check and reserve rooms on the Universty of Sevilla library",
